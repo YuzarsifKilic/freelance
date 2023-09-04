@@ -1,10 +1,7 @@
 package com.yuzarsif.freelance.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,6 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Advertisement {
 
     @Id
@@ -22,9 +20,15 @@ public class Advertisement {
     private Long id;
     private String header;
     private String description;
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH, CascadeType.MERGE,
+                    CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(
+            name = "category_advertisement",
+            joinColumns = @JoinColumn(name = "advertisement_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private Set<Category> category = new HashSet<>();
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.MERGE,
                     CascadeType.PERSIST, CascadeType.REFRESH})
