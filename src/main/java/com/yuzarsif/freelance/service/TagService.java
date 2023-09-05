@@ -7,6 +7,7 @@ import com.yuzarsif.freelance.repository.TagRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TagService {
@@ -15,6 +16,14 @@ public class TagService {
 
     public TagService(TagRepository repository) {
         this.repository = repository;
+    }
+
+    public List<TagDto> findTagsByLabelName(String labelName) {
+        List<Tag> tags = repository.findByLabelNameContains(labelName);
+
+        return tags.stream()
+                .map(TagDto::convert)
+                .collect(Collectors.toList());
     }
 
     protected Tag findTagById(Long id) {
