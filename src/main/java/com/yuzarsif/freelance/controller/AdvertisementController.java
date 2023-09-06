@@ -32,6 +32,11 @@ public class AdvertisementController {
         return ResponseEntity.ok(advertisementSearchService.findAdvertisementByGivenId(id));
     }
 
+    @DeleteMapping("/{id}")
+    public void deleteAdvertisementById(@PathVariable Long id) {
+        advertisementSaveService.deleteAdvertisement(id);
+    }
+
     @PostMapping("/{id}")
     public void increaseAdvertisementViewsById(@PathVariable Long id) {
         advertisementSaveService.increaseAdvertisementViewsById(id);

@@ -1,5 +1,6 @@
 package com.yuzarsif.freelance.service;
 
+import com.yuzarsif.freelance.dto.EmployerDto;
 import com.yuzarsif.freelance.exceptioin.EmployerNotFoundException;
 import com.yuzarsif.freelance.model.Employer;
 import com.yuzarsif.freelance.model.Location;
@@ -19,11 +20,16 @@ public class EmployerService {
         this.locationService = locationService;
     }
 
-    public Employer findEmployerById(Long id) {
+    public EmployerDto findEmployerById(Long id) {
+        Employer employer = getEmployer(id);
+
+        return EmployerDto.convert(employer);
+    }
+
+    protected Employer getEmployer(Long id) {
         Employer employer = repository.findById(id)
                 .orElseThrow(
                         () -> new EmployerNotFoundException("Employer didnt find by id : " + id));
-
         return employer;
     }
 
@@ -40,5 +46,11 @@ public class EmployerService {
                 .build();
 
         repository.save(employer);
+    }
+    
+    public void deleteEmployerById(Long id) {
+        Employer employer = getEmployer(id);
+
+        repository.deleteById(id);
     }
 }

@@ -33,7 +33,7 @@ public class AdvertisementSaveService {
     }
 
     public void createAdvertisement(CreateAdvertisementRequest request) {
-        Employer employer = employerService.findEmployerById(request.employerId());
+        Employer employer = employerService.getEmployer(request.employerId());
 
         Set<Category> categories = new HashSet<>();
 
@@ -70,5 +70,11 @@ public class AdvertisementSaveService {
         advertisement.setViews(advertisement.getViews() + 1);
 
         repository.save(advertisement);
+    }
+
+    public void deleteAdvertisement(Long id) {
+        Advertisement advertisement = advertisementSearchService.getAdvertisementById(id);
+
+        repository.deleteById(id);
     }
 }
