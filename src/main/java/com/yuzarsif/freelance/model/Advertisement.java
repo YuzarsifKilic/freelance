@@ -52,6 +52,6 @@ public class Advertisement {
     public LocalDateTime createdDate;
     @UpdateTimestamp
     public LocalDateTime updatedDate;
-    @OneToOne(mappedBy = "advertisement", cascade = CascadeType.ALL)
-    private FinishedAdvertisement finishedAdvertisement;
+    @OneToMany(mappedBy = "advertisement",cascade = CascadeType.ALL)
+    private Set<Appeal> appeals = new HashSet<>();
 }

@@ -1,5 +1,6 @@
 package com.yuzarsif.freelance.service;
 
+import com.yuzarsif.freelance.dto.AdvertisementDto;
 import com.yuzarsif.freelance.model.Advertisement;
 import com.yuzarsif.freelance.model.Category;
 import com.yuzarsif.freelance.model.Employer;
@@ -32,7 +33,7 @@ public class AdvertisementSaveService {
         this.advertisementSearchService = advertisementSearchService;
     }
 
-    public void createAdvertisement(CreateAdvertisementRequest request) {
+    public AdvertisementDto createAdvertisement(CreateAdvertisementRequest request) {
         Employer employer = employerService.getEmployer(request.employerId());
 
         Set<Category> categories = new HashSet<>();
@@ -61,7 +62,9 @@ public class AdvertisementSaveService {
                 .views(0)
                 .build();
 
-        repository.save(advertisement);
+        Advertisement savedAdvertisement = repository.save(advertisement);
+
+        return AdvertisementDto.convert(savedAdvertisement);
     }
 
     public void increaseAdvertisementViewsById(Long id) {

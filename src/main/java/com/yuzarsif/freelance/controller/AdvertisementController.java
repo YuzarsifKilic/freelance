@@ -23,8 +23,8 @@ public class AdvertisementController {
     }
 
     @PostMapping
-    public void createAdvertisement(@RequestBody CreateAdvertisementRequest request) {
-        advertisementSaveService.createAdvertisement(request);
+    public ResponseEntity<AdvertisementDto> createAdvertisement(@RequestBody CreateAdvertisementRequest request) {
+        return ResponseEntity.ok(advertisementSaveService.createAdvertisement(request));
     }
 
     @GetMapping("/{id}")

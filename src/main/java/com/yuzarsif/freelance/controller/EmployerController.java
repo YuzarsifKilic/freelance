@@ -17,9 +17,8 @@ public class EmployerController {
     }
 
     @PostMapping
-    public String createEmployer(@RequestBody CreateEmployerRequest request) {
-        service.createEmployer(request);
-        return "Employer created";
+    public ResponseEntity<EmployerDto> createEmployer(@RequestBody CreateEmployerRequest request) {
+        return ResponseEntity.ok(service.createEmployer(request));
     }
 
     @GetMapping("/{id}")

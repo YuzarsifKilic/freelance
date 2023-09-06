@@ -1,28 +1,26 @@
 package com.yuzarsif.freelance.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Table(name = "finished_advertisements")
+@Table(name = "appeals")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class FinishedAdvertisement {
+@Builder
+public class Appeal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne
     @JoinColumn(name = "advertisement_id")
     private Advertisement advertisement;
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
-    private int rating;
-    private String comments;
+    private String commitment;
+    private boolean isSeen;
 }

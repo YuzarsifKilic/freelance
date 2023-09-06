@@ -33,7 +33,7 @@ public class EmployerService {
         return employer;
     }
 
-    public void createEmployer(CreateEmployerRequest request) {
+    public EmployerDto createEmployer(CreateEmployerRequest request) {
         Location location = locationService.findLocationById(request.locationId());
 
         Employer employer = Employer.builder()
@@ -45,7 +45,9 @@ public class EmployerService {
                 .location(location)
                 .build();
 
-        repository.save(employer);
+        Employer savedEmployer = repository.save(employer);
+
+        return EmployerDto.convert(savedEmployer);
     }
     
     public void deleteEmployerById(Long id) {

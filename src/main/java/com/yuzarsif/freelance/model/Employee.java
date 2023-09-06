@@ -17,6 +17,8 @@ import java.util.Set;
 public class Employee extends User {
 
     private String resume;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
-    private Set<FinishedAdvertisement> finishedAdvertisements = new HashSet<>();
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private Set<Rating> ratings = new HashSet<>();
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private Set<Appeal> appeals = new HashSet<>();
 }

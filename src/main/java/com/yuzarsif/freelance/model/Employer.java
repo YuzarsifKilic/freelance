@@ -21,4 +21,6 @@ public class Employer extends User {
     private Location location;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employer")
     private Set<Advertisement> advertisements = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employer")
+    private Set<Rating> ratings = new HashSet<>();
 }
