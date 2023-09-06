@@ -1,5 +1,7 @@
 package com.yuzarsif.freelance.service;
 
+import com.yuzarsif.freelance.dto.AdvertisementDto;
+import com.yuzarsif.freelance.exceptioin.AdvertisementNotFoundException;
 import com.yuzarsif.freelance.model.Advertisement;
 import com.yuzarsif.freelance.model.Category;
 import com.yuzarsif.freelance.model.Employer;
@@ -18,15 +20,18 @@ public class AdvertisementService {
     private final EmployerService employerService;
     private final CategoryService categoryService;
     private final TagService tagService;
+    private final AdvertisementSearchService advertisementSearchService;
 
     public AdvertisementService(AdvertisementRepository repository,
                                 EmployerService employerService,
                                 CategoryService categoryService,
-                                TagService tagService) {
+                                TagService tagService,
+                                AdvertisementSearchService advertisementSearchService) {
         this.repository = repository;
         this.employerService = employerService;
         this.categoryService = categoryService;
         this.tagService = tagService;
+        this.advertisementSearchService = advertisementSearchService;
     }
 
     public void createAdvertisement(CreateAdvertisementRequest request) {
@@ -55,7 +60,16 @@ public class AdvertisementService {
                 .isDone(false)
                 .price(request.price())
                 .duration(request.duration())
+                .views(0)
                 .build();
+
+        repository.save(advertisement);
+    }
+
+    public void increaseAdvertisementViewsById(Long id) {
+        Advertisement advertisement = advertisementSearchService.getAdvertisementById(id);
+
+        advertisement.setViews(advertisement.getViews() + 1);
 
         repository.save(advertisement);
     }
