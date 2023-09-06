@@ -1,7 +1,5 @@
 package com.yuzarsif.freelance.service;
 
-import com.yuzarsif.freelance.dto.AdvertisementDto;
-import com.yuzarsif.freelance.exceptioin.AdvertisementNotFoundException;
 import com.yuzarsif.freelance.model.Advertisement;
 import com.yuzarsif.freelance.model.Category;
 import com.yuzarsif.freelance.model.Employer;
@@ -14,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class AdvertisementService {
+public class AdvertisementSaveService {
 
     private final AdvertisementRepository repository;
     private final EmployerService employerService;
@@ -22,11 +20,11 @@ public class AdvertisementService {
     private final TagService tagService;
     private final AdvertisementSearchService advertisementSearchService;
 
-    public AdvertisementService(AdvertisementRepository repository,
-                                EmployerService employerService,
-                                CategoryService categoryService,
-                                TagService tagService,
-                                AdvertisementSearchService advertisementSearchService) {
+    public AdvertisementSaveService(AdvertisementRepository repository,
+                                    EmployerService employerService,
+                                    CategoryService categoryService,
+                                    TagService tagService,
+                                    AdvertisementSearchService advertisementSearchService) {
         this.repository = repository;
         this.employerService = employerService;
         this.categoryService = categoryService;

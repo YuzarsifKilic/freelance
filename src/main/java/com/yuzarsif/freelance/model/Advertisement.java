@@ -2,7 +2,10 @@ package com.yuzarsif.freelance.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +23,7 @@ public class Advertisement {
     private Long id;
     private String header;
     private String description;
-    @ManyToMany(fetch = FetchType.LAZY,
+    @ManyToMany(fetch = FetchType.EAGER,
             cascade = {CascadeType.DETACH, CascadeType.MERGE,
                     CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
@@ -29,7 +32,7 @@ public class Advertisement {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private Set<Category> category = new HashSet<>();
-    @ManyToMany(fetch = FetchType.LAZY,
+    @ManyToMany(fetch = FetchType.EAGER,
             cascade = {CascadeType.DETACH, CascadeType.MERGE,
                     CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
@@ -44,6 +47,11 @@ public class Advertisement {
     private boolean isDone;
     private int price;
     private int duration;
+    private int views;
+    @CreationTimestamp
+    public LocalDateTime createdDate;
+    @UpdateTimestamp
+    public LocalDateTime updatedDate;
     @OneToOne(mappedBy = "advertisement", cascade = CascadeType.ALL)
     private FinishedAdvertisement finishedAdvertisement;
 }
