@@ -18,13 +18,16 @@ public class AppealService {
     private final AppealRepository repository;
     private final AdvertisementSearchService advertisementSearchService;
     private final EmployeeService employeeService;
+    private final NotificationService notificationService;
 
     public AppealService(AppealRepository repository,
                          AdvertisementSearchService advertisementSearchService,
-                         EmployeeService employeeService) {
+                         EmployeeService employeeService,
+                         NotificationService notificationService) {
         this.repository = repository;
         this.advertisementSearchService = advertisementSearchService;
         this.employeeService = employeeService;
+        this.notificationService = notificationService;
     }
 
     public AppealDto findAppealById(Long id) {
@@ -33,6 +36,25 @@ public class AppealService {
                         () -> new AppealNotFoundException("Appeal didnt find by id : " + id));
 
         return AppealDto.convert(appeal);
+    }
+
+    public AppealDto createAppeal(CreateAppealRequest request) {
+        Advertisement advertisement = advertisementSearchService.getAdvertisementById(request.advertisementId());
+        Employee employee = employeeService.getEmployee(request.employeeId());
+
+        Appeal appeal = Appeal.builder()
+                .advertisement(advertisement)
+                .employee(employee)
+                .commitment(request.commitment())
+                .build();
+
+        Appeal savedAppeal = repository.save(appeal);
+
+        notificationService.createNotification(
+                advertisement.getEmployer(),
+                "There is a new appeal for your advertisement");
+
+        return AppealDto.convert(savedAppeal);
     }
 
     public List<AppealDto> findAppealsByAdvertisementIdOrderByCreatedDateDesc(Long id) {
@@ -59,21 +81,6 @@ public class AppealService {
         appeal.setSeen(true);
 
         repository.save(appeal);
-    }
-
-    public AppealDto createAppeal(CreateAppealRequest request) {
-        Advertisement advertisement = advertisementSearchService.getAdvertisementById(request.advertisementId());
-        Employee employee = employeeService.getEmployee(request.employeeId());
-
-        Appeal appeal = Appeal.builder()
-                .advertisement(advertisement)
-                .employee(employee)
-                .commitment(request.commitment())
-                .build();
-
-        Appeal savedAppeal = repository.save(appeal);
-
-        return AppealDto.convert(savedAppeal);
     }
 
     public List<AppealDto> findAppealsByEmployeeIdOrderByCreatedDateDesc(Long id) {

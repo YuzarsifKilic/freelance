@@ -9,6 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -28,6 +30,8 @@ public abstract class User {
     private boolean isActive;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Notification> notifications = new HashSet<>();
     @CreationTimestamp
     private LocalDateTime createdDate;
     @UpdateTimestamp
