@@ -27,8 +27,24 @@ public class AppealService {
         this.employeeService = employeeService;
     }
 
-    public List<AppealDto> findAppealsByAdvertisementId(Long id) {
-        List<Appeal> appeals = repository.findByAdvertisement_Id(id);
+    public AppealDto findAppealById(Long id) {
+        Appeal appeal = repository.findById(id)
+                .orElseThrow(
+                        () -> new AppealNotFoundException("Appeal didnt find by id : " + id));
+
+        return AppealDto.convert(appeal);
+    }
+
+    public List<AppealDto> findAppealsByAdvertisementIdOrderByCreatedDateDesc(Long id) {
+        List<Appeal> appeals = repository.findByAdvertisement_IdOrderByCreatedDateDesc(id);
+
+        return appeals.stream()
+                .map(AppealDto::convert)
+                .collect(Collectors.toList());
+    }
+
+    public List<AppealDto> findAppealsByAdvertisementIdOrderByCreatedDateAsc(Long id) {
+        List<Appeal> appeals = repository.findByAdvertisement_IdOrderByCreatedDateAsc(id);
 
         return appeals.stream()
                 .map(AppealDto::convert)
@@ -58,5 +74,37 @@ public class AppealService {
         Appeal savedAppeal = repository.save(appeal);
 
         return AppealDto.convert(savedAppeal);
+    }
+
+    public List<AppealDto> findAppealsByEmployeeIdOrderByCreatedDateDesc(Long id) {
+        List<Appeal> appeals = repository.findByEmployee_IdOrderByCreatedDateDesc(id);
+
+        return appeals.stream()
+                .map(AppealDto::convert)
+                .collect(Collectors.toList());
+    }
+
+    public List<AppealDto> findAppealsByEmployeeIdOrderByCreatedDateAsc(Long id) {
+        List<Appeal> appeals = repository.findByEmployee_IdOrderByCreatedDateAsc(id);
+
+        return appeals.stream()
+                .map(AppealDto::convert)
+                .collect(Collectors.toList());
+    }
+
+    public List<AppealDto> findAppealsByEmployerIdOrderByCreatedDateDesc(Long id) {
+        List<Appeal> appeals = repository.findByAdvertisement_Employer_IdOrderByCreatedDateDesc(id);
+
+        return appeals.stream()
+                .map(AppealDto::convert)
+                .collect(Collectors.toList());
+    }
+
+    public List<AppealDto> findAppealsByEmployerIdOrderByCreatedDateAsc(Long id) {
+        List<Appeal> appeals = repository.findByAdvertisement_Employer_IdOrderByCreatedDateAsc(id);
+
+        return appeals.stream()
+                .map(AppealDto::convert)
+                .collect(Collectors.toList());
     }
 }
