@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface RatingRepository extends JpaRepository<Rating, Long> {
 
-    List<Rating> findByEmployee_Id(Long id);
+    List<Rating> findByEmployee_IdOrderByCreatedDateDesc(Long id);
+
+    List<Rating> findByEmployee_IdOrderByCreatedDateAsc(Long id);
 }

@@ -2,6 +2,10 @@ package com.yuzarsif.freelance.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ratings")
@@ -23,15 +27,8 @@ public class Rating {
     private Employee employee;
     private float evaluation;
     private String comment;
-
-    @Override
-    public String toString() {
-        return "Rating{" +
-                "id=" + id +
-                ",employerEmail=" + employer.getEmail() +
-                ",employeeEmail=" + employee.getEmail() +
-                ", evaluation=" + evaluation +
-                ", comment='" + comment + '\'' +
-                '}';
-    }
+    @CreationTimestamp
+    private LocalDateTime createdDate;
+    @UpdateTimestamp
+    private LocalDateTime updatedDate;
 }

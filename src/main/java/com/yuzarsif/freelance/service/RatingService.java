@@ -26,8 +26,16 @@ public class RatingService {
         this.employerService = employerService;
     }
 
-    public List<RatingDto> findRatingByEmployeeId(Long id) {
-        List<Rating> ratings = repository.findByEmployee_Id(id);
+    public List<RatingDto> findRatingByEmployeeIdOrderByCreatedDateDesc(Long id) {
+        List<Rating> ratings = repository.findByEmployee_IdOrderByCreatedDateDesc(id);
+
+        return ratings.stream()
+                .map(RatingDto::convert)
+                .collect(Collectors.toList());
+    }
+
+    public List<RatingDto> findRatingByEmployeeIdOrderByCreatedDateAsc(Long id) {
+        List<Rating> ratings = repository.findByEmployee_IdOrderByCreatedDateAsc(id);
 
         return ratings.stream()
                 .map(RatingDto::convert)
