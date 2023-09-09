@@ -1,17 +1,16 @@
 package com.yuzarsif.freelance;
 
-import com.yuzarsif.freelance.dto.EmployeeDto;
-import com.yuzarsif.freelance.dto.NotificationDto;
-import com.yuzarsif.freelance.dto.RatingDto;
+import com.yuzarsif.freelance.dto.ConversationDto;
+import com.yuzarsif.freelance.dto.MessageDto;
+import com.yuzarsif.freelance.model.Conversation;
 import com.yuzarsif.freelance.model.Employee;
 import com.yuzarsif.freelance.model.Employer;
-import com.yuzarsif.freelance.model.Rating;
+import com.yuzarsif.freelance.repository.ConversationRepository;
 import com.yuzarsif.freelance.repository.EmployeeRepository;
 import com.yuzarsif.freelance.repository.EmployerRepository;
-import com.yuzarsif.freelance.repository.RatingRepository;
-import com.yuzarsif.freelance.request.CreateAppealRequest;
-import com.yuzarsif.freelance.request.CreateEmployeeRequest;
-import com.yuzarsif.freelance.service.*;
+import com.yuzarsif.freelance.request.CreateMessageRequest;
+import com.yuzarsif.freelance.service.ConversationService;
+import com.yuzarsif.freelance.service.MessageService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,9 +26,33 @@ public class FreelanceApplication {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(AppealService appealService) {
+    public CommandLineRunner commandLineRunner(MessageService messageService) {
         return args -> {
-            appealService.createAppeal(new CreateAppealRequest(3L, 2L, "i can help you"));
+
+
+            List<MessageDto> messages = messageService.findMessages(2L, 1L);
+
+            for (MessageDto messageDto: messages) {
+                System.out.println(messageDto);
+            }
+
+            System.out.println("****");
+
+            List<MessageDto> messages1 = messageService.findMessages(1L, 2L);
+
+            for (MessageDto messageDto: messages1) {
+                System.out.println(messageDto);
+            }
+
+            System.out.println("****");
+
+
+            List<MessageDto> messages2 = messageService.findMessages(3L, 1L);
+
+            for (MessageDto messageDto: messages2) {
+                System.out.println(messageDto);
+            }
+
         };
     }
 

@@ -1,9 +1,7 @@
 package com.yuzarsif.freelance.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,7 +16,8 @@ import java.util.Set;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public abstract class User {
 
     @Id
@@ -36,4 +35,8 @@ public abstract class User {
     private LocalDateTime createdDate;
     @UpdateTimestamp
     private LocalDateTime updatedDate;
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    private Set<Conversation> senderOfMessages = new HashSet<>();
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    private Set<Conversation> receiverOfMessages = new HashSet<>();
 }
