@@ -8,4 +8,6 @@ import java.util.List;
 public interface TagRepository extends JpaRepository<Tag, Long> {
 
     List<Tag> findByLabelNameContains(String labelName);
+
+    List<Tag> findByCategory_Id(Long id);
 }

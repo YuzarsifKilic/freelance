@@ -38,7 +38,7 @@ public class AdvertisementSaveService {
 
         Set<Category> categories = new HashSet<>();
 
-        for (int id : request.categoryId()) {
+        for (Long id : request.categoryId()) {
             Category category = categoryService.findCategoryById(id);
             categories.add(category);
         }

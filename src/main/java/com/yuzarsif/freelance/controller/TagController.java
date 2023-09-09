@@ -24,4 +24,9 @@ public class TagController {
     public ResponseEntity<List<TagDto>> findTagsByLabelName(@PathVariable String name) {
         return ResponseEntity.ok(service.findTagsByLabelName(name));
     }
+
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<TagDto>> findTagsByCategoryId(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findTagsByCategoryId(id));
+    }
 }
