@@ -58,4 +58,10 @@ public class NotificationService {
 
         repository.save(notification);
     }
+
+    public void deleteNotification(Long id) {
+        Notification notification = getNotification(id);
+
+        repository.deleteById(notification.getId());
+    }
 }

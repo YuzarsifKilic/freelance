@@ -1,6 +1,7 @@
 package com.yuzarsif.freelance.service;
 
 import com.yuzarsif.freelance.dto.MessageDto;
+import com.yuzarsif.freelance.exceptioin.MessageNotFoundException;
 import com.yuzarsif.freelance.model.Conversation;
 import com.yuzarsif.freelance.model.Message;
 import com.yuzarsif.freelance.model.User;
@@ -58,5 +59,19 @@ public class MessageService {
         return messages.stream()
                 .map(MessageDto::convert)
                 .collect(Collectors.toList());
+    }
+
+    public void deleteMessageById(Long id) {
+        Message message = getMessage(id);
+
+        repository.deleteById(message.getId());
+    }
+
+    private Message getMessage(Long id) {
+        Message message = repository.findById(id)
+                .orElseThrow(
+                        () -> new MessageNotFoundException("Message not found by id : " + id));
+
+        return message;
     }
 }

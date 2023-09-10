@@ -23,7 +23,7 @@ public class Advertisement {
     private Long id;
     private String header;
     private String description;
-    @ManyToMany(fetch = FetchType.EAGER,
+    @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.MERGE,
                     CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
@@ -32,7 +32,7 @@ public class Advertisement {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private Set<Category> category = new HashSet<>();
-    @ManyToMany(fetch = FetchType.EAGER,
+    @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.DETACH, CascadeType.MERGE,
                     CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(

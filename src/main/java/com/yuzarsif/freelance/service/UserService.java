@@ -21,4 +21,10 @@ public class UserService {
 
         return user;
     }
+
+    public void deleteUserById(Long id) {
+        User user = findUserById(id);
+
+        repository.deleteById(user.getId());
+    }
 }

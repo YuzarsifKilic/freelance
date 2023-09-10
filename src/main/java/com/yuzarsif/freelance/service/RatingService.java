@@ -1,6 +1,7 @@
 package com.yuzarsif.freelance.service;
 
 import com.yuzarsif.freelance.dto.RatingDto;
+import com.yuzarsif.freelance.exceptioin.RatingNotFoundException;
 import com.yuzarsif.freelance.model.Employee;
 import com.yuzarsif.freelance.model.Employer;
 import com.yuzarsif.freelance.model.Rating;
@@ -56,5 +57,19 @@ public class RatingService {
         Rating savedRating = repository.save(rating);
 
         return RatingDto.convert(savedRating);
+    }
+
+    public void deleteRating(Long id) {
+        Rating rating = getRating(id);
+
+        repository.deleteById(rating.getId());
+    }
+
+    private Rating getRating(Long id) {
+        Rating rating = repository.findById(id)
+                .orElseThrow(
+                        () -> new RatingNotFoundException("Rating not found by id : " + id));
+
+        return rating;
     }
 }

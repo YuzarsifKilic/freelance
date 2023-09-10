@@ -60,4 +60,10 @@ public class ConversationService {
                 .map(ConversationDto::convert)
                 .collect(Collectors.toList());
     }
+
+    public void deleteConversation(Long senderId, Long receiverId) {
+        Conversation conversation = findConversationBySenderIdAndReceiverId(senderId, receiverId);
+
+        repository.deleteById(conversation.getId());
+    }
 }

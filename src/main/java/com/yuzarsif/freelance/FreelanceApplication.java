@@ -11,6 +11,7 @@ import com.yuzarsif.freelance.repository.EmployerRepository;
 import com.yuzarsif.freelance.request.CreateMessageRequest;
 import com.yuzarsif.freelance.service.ConversationService;
 import com.yuzarsif.freelance.service.MessageService;
+import com.yuzarsif.freelance.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,32 +27,11 @@ public class FreelanceApplication {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(MessageService messageService) {
+    public CommandLineRunner commandLineRunner(UserService userService) {
         return args -> {
 
+        userService.deleteUserById(6L);
 
-            List<MessageDto> messages = messageService.findMessages(2L, 1L);
-
-            for (MessageDto messageDto: messages) {
-                System.out.println(messageDto);
-            }
-
-            System.out.println("****");
-
-            List<MessageDto> messages1 = messageService.findMessages(1L, 2L);
-
-            for (MessageDto messageDto: messages1) {
-                System.out.println(messageDto);
-            }
-
-            System.out.println("****");
-
-
-            List<MessageDto> messages2 = messageService.findMessages(3L, 1L);
-
-            for (MessageDto messageDto: messages2) {
-                System.out.println(messageDto);
-            }
 
         };
     }

@@ -39,4 +39,10 @@ public class EmployeeService {
 
         return employee;
     }
+
+    public void deleteEmployeeById(Long id) {
+        Employee employee = getEmployee(id);
+
+        repository.deleteById(employee.getId());
+    }
 }
