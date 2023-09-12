@@ -20,4 +20,6 @@ public class Employee extends User {
     private Set<Rating> ratings = new HashSet<>();
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private Set<Appeal> appeals = new HashSet<>();
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private Set<Deal> deals = new HashSet<>();
 }

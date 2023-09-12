@@ -54,4 +54,6 @@ public class Advertisement {
     public LocalDateTime updatedDate;
     @OneToMany(mappedBy = "advertisement",cascade = CascadeType.ALL)
     private Set<Appeal> appeals = new HashSet<>();
+    @OneToOne(mappedBy = "advertisement", cascade = CascadeType.ALL)
+    private Deal deal;
 }
