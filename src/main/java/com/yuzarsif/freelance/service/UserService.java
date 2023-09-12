@@ -27,4 +27,10 @@ public class UserService {
 
         repository.deleteById(user.getId());
     }
+
+    protected boolean emailInUse(String email) {
+        User user = repository.findByEmail(email);
+
+        return user != null;
+    }
 }

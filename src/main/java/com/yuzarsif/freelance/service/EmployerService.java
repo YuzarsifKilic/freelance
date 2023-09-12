@@ -1,6 +1,7 @@
 package com.yuzarsif.freelance.service;
 
 import com.yuzarsif.freelance.dto.EmployerDto;
+import com.yuzarsif.freelance.exceptioin.EmailAlreadyExistsException;
 import com.yuzarsif.freelance.exceptioin.EmployerNotFoundException;
 import com.yuzarsif.freelance.model.Employer;
 import com.yuzarsif.freelance.model.Location;
@@ -14,10 +15,12 @@ public class EmployerService {
 
     private final EmployerRepository repository;
     private final LocationService locationService;
+    private final UserService userService;
 
-    public EmployerService(EmployerRepository repository, LocationService locationService) {
+    public EmployerService(EmployerRepository repository, LocationService locationService, UserService userService) {
         this.repository = repository;
         this.locationService = locationService;
+        this.userService = userService;
     }
 
     public EmployerDto findEmployerById(Long id) {
@@ -34,6 +37,11 @@ public class EmployerService {
     }
 
     public EmployerDto createEmployer(CreateEmployerRequest request) {
+
+        if (userService.emailInUse(request.email())) {
+            throw new EmailAlreadyExistsException("Email : " + request.email() + " already in use!");
+        }
+
         Location location = locationService.findLocationById(request.locationId());
 
         Employer employer = Employer.builder()
